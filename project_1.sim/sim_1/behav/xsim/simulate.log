@@ -1,0 +1,5 @@
+Time resolution is 1 ps
+t1 pass 0+0=0
+t2 pass
+t3 pass
+$finish called at time : 30 ns : File "C:/Users/ec24673/project_1/project_1.srcs/sim_1/new/test.v" Line 56
