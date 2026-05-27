@@ -1,1 +1,1 @@
-# risc-v-cpu
+# RISC-V CPU — Summer 2026
