@@ -21,7 +21,7 @@
 
 
 module PC
-#(parameter WIDTH=5)
+#(parameter WIDTH=7)
  
 (input EN, nRST, clk, 
  input [WIDTH-1:0] D,
