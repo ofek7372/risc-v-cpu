@@ -17,9 +17,9 @@ module ALU_v1
     Y= {WIDTH{1'b0}};
     cout_borrow= 1'b0;
     case (alu_ctrl)
-    3'b111: Y={1'b0,a[WIDTH-2:0]}; //logical shift right (insert zero)
-    3'b110: Y={a[WIDTH-1:1],1'b0};// logical shift left SLL (insert zero)
-    3'b101: Y={{(WIDTH-1){1'b0}},(a<b)}; 
+    3'b111: Y= a>>b[$clog2(WIDTH)-1:0]; //logical shift right (insert zero)
+    3'b110: Y= a<<b[4:0];// logical shift left SLL (insert zero)
+    3'b101: Y={{(WIDTH-1){1'b0}},( $signed(a) < $signed(b))}; 
     3'b100: Y=a^b;// xor
     3'b011: Y=a|b;//or
     3'b010: Y=a&b;// and

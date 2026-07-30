@@ -33,7 +33,7 @@ module SC_main_decoder
             7'b0110011:// R-type
                 begin
                     ALUop = 2'b00;
-                    IMMsrc = 2'b01;//hits default
+                    IMMsrc = 2'b01;//Dont care, gaurded by ALUsrc and PCsrc
                     Bop = 2'b00;
                     ALUsrc=1'b0;
                     REGwr=1'b1;
@@ -80,7 +80,7 @@ module SC_main_decoder
                     begin
                     ALUop = 2'b11;
                     IMMsrc = 2'b01;//hits B_type
-                    Bop = 2'b10;
+                    Bop = 2'b01;
                     ALUsrc=1'b0;
                     REGwr=1'b0;
                     MEMrd=1'b0;
@@ -92,7 +92,7 @@ module SC_main_decoder
                     begin
                     ALUop = 2'b11;
                     IMMsrc = 2'b01;//hits B_type
-                    Bop = 2'b01;
+                    Bop = 2'b10;
                     ALUsrc=1'b0;
                     REGwr=1'b0;
                     MEMrd=1'b0;

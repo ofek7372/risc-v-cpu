@@ -118,12 +118,12 @@ tv_ctrl[16]=3'b100; tv_a[16]=8'b11110000; tv_b[16]=8'b11000000; tv_expY[16]=8'b0
 //slt
 tv_ctrl[17]=3'b101; tv_a[17]=8'd2; tv_b[17]=8'd4; tv_expY[17]=8'd1; tv_cout[17]=1'b0; tv_zero[17]=1'b0;
 tv_ctrl[18]=3'b101; tv_a[18]=8'd8; tv_b[18]=8'd4; tv_expY[18]=8'd0; tv_cout[18]=1'b0; tv_zero[18]=1'b1;
-tv_ctrl[19]=3'b101; tv_a[19]=8'd4; tv_b[19]=8'd4; tv_expY[19]=8'd0; tv_cout[19]=1'b0; tv_zero[19]=1'b1;
+tv_ctrl[19]=3'b101; tv_a[19]=8'b11110100; tv_b[19]=8'd4; tv_expY[19]=8'd1; tv_cout[19]=1'b0; tv_zero[19]=1'b0;
 
 //sll test
-tv_ctrl[20]=3'b110; tv_a[20]=8'd255; tv_b[20]=8'd4; tv_expY[20]=8'd254; tv_cout[20]=1'b0; tv_zero[20]=1'b0;
+tv_ctrl[20]=3'b110; tv_a[20]=8'd1; tv_b[20]=8'd4; tv_expY[20]=8'd16; tv_cout[20]=1'b0; tv_zero[20]=1'b0;
 //srl test
-tv_ctrl[13]=3'b111; tv_a[13]=8'd255; tv_b[13]=8'd4; tv_expY[13]=8'd127; tv_cout[13]=1'b0; tv_zero[13]=1'b0;
+tv_ctrl[13]=3'b111; tv_a[13]=8'd255; tv_b[13]=8'd4; tv_expY[13]=8'd15; tv_cout[13]=1'b0; tv_zero[13]=1'b0;
 
 
 for (t=0; t<N; t=t+1) begin
