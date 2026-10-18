@@ -28,7 +28,7 @@ module PC
  output reg [WIDTH-1:0] Q);
  always @(posedge clk)
   begin 
-   if (nRST == 1'b0) Q<= 'b0;
+   if (nRST == 1'b0) Q<= 'h2000;
    else if (EN == 1'b0) Q<= Q;
    else Q <=D;
    end

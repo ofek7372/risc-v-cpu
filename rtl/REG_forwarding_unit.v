@@ -22,17 +22,17 @@
 
 module REG_forwarding_unit #(parameter word=32)
     (
-    input [4:0] RS1, RS2, MEM_WB_RD,
-    input MEM_WB_REGwr,
-    input [word-1:0] r_a, r_b, MEM_WB_WBdata,
+    input [4:0] RS1, RS2, WB_RD,
+    input WB_REGwr,
+    input [word-1:0] r_a, r_b, WB_WBdata,
     output reg [word-1:0] REG_A,REG_B    
     );
     
     always @(*)
         begin
-            if (MEM_WB_REGwr & (RS1==MEM_WB_RD) & (RS1!= 'b0)) REG_A = MEM_WB_WBdata;
+            if (WB_REGwr & (RS1==WB_RD) & (RS1!= 'b0)) REG_A = WB_WBdata;
             else REG_A = r_a;
-            if (MEM_WB_REGwr & (RS2==MEM_WB_RD) & (RS2!= 'b0)) REG_B = MEM_WB_WBdata;
+            if (WB_REGwr & (RS2==WB_RD) & (RS2!= 'b0)) REG_B = WB_WBdata;
             else REG_B = r_b;
             end
 endmodule

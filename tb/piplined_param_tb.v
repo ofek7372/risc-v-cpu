@@ -24,43 +24,47 @@ module piplined_param_tb
 #(parameter  TEST=1);
   
   localparam HEX_FILE=
-    (TEST==0)? "C:/Users/ec24673/project_2/tests_mem/alu_fwd_test_inst.hex":
+    (TEST==0)? "C:/Users/ec24673/project_2/tests_mem/testprog3_inst.hex":
     (TEST==1)? "C:/Users/ec24673/project_2/tests_mem/branch_test_inst.hex":
-    (TEST==2)? "C:/Users/ec24673/project_2/tests_mem/load_use_mc_inst.hex":"" ;
+    (TEST==2)? "C:/Users/ec24673/project_2/tests_mem/load_use_mc_inst.hex":
+    (TEST==3)?"C:/Users/ec24673/project_2/tests_mem/testbranch2_inst.hex":"" ;
      
   localparam SIG_REG_FILE= 
-   (TEST==0) ? "C:/Users/ec24673/project_2/signiture/test_reg.sig":
+   (TEST==0) ? "C:/Users/ec24673/project_2/signiture/testprog3_reg.sig":
    (TEST==1)? "C:/Users/ec24673/project_2/signiture/branch_test_reg.sig":
-   (TEST==2)?"C:/Users/ec24673/project_2/signiture/load_use_mc_reg.sig":"";
+   (TEST==2)?"C:/Users/ec24673/project_2/signiture/load_use_mc_reg.sig":
+   (TEST==3)?"C:/Users/ec24673/project_2/signiture/testbranch2_reg.sig":"";
    
   localparam SIG_MEM_FILE= 
-  (TEST==0)? "C:/Users/ec24673/project_2/signiture/test_mem.sig":
+  (TEST==0)? "C:/Users/ec24673/project_2/signiture/testprog3_mem.sig":
   (TEST==1)? "C:/Users/ec24673/project_2/signiture/branch_test_mem.sig":
-  (TEST==2)? "C:/Users/ec24673/project_2/signiture/load_use_mc_mem.sig":"";
+  (TEST==2)? "C:/Users/ec24673/project_2/signiture/load_use_mc_mem.sig":
+  (TEST==3)?"C:/Users/ec24673/project_2/signiture/testbranch2_mem.sig":"";
   
   localparam RUN_CYCLES = 100;
   
   localparam CHECK_MEM=1;
   localparam clk_period=10;
-  localparam inst_addr_width=8;
-  localparam data_addr_width=7;
-  localparam word=32;
+  localparam inst_addr_width=10;
+  localparam data_addr_width=10;
+  localparam WIDTH=32;
+  localparam data_base_addr ='h3000;
   
   reg EN;
   reg nRST;
   reg clk;
   
-pipeline_top_module #(.word(word),.inst_addr_width(inst_addr_width),.data_addr_width(data_addr_width)) DUT (.EN(EN),.nRST(nRST),.clk(clk)); 
+RV32I_top #(.WIDTH(WIDTH),.INST_ADDR_WIDTH(inst_addr_width),.DATA_ADDR_WIDTH(data_addr_width),.data_base_addr(data_base_addr)) DUT (.EN(EN),.nRST(nRST),.clk(clk)); 
  
   //clk gen
   initial clk=1'b0;
   always #(clk_period/2) clk=~clk;
     
-reg [word-1:0] sig_reg [0:word-1];
-reg [7:0] sig_mem [0:(2**data_addr_width)-1];
+reg [WIDTH-1:0] sig_reg [0:WIDTH-1];
+reg [WIDTH-1:0] sig_mem [0:(2**data_addr_width)-1];
 
 
-reg reg_fail [0:word-1];
+reg reg_fail [0:WIDTH-1];
 reg mem_fail [0:(2**data_addr_width)-1];
 integer cycle;
 integer i;
@@ -68,7 +72,7 @@ integer fail;
 //file load
  initial
  begin
- $readmemh(HEX_FILE, DUT.inst_mem.mem);
+ //$readmemh(HEX_FILE, DUT.RV32I_INST_MEM.mem);
  $readmemh(SIG_REG_FILE, sig_reg);
  $readmemh(SIG_MEM_FILE, sig_mem);
  cycle=0;
@@ -85,9 +89,9 @@ integer fail;
             if (cycle==1) nRST=1'b1;
             end
     end
-    for (i=0;i<word;i=i+1)
+    for (i=0;i<WIDTH;i=i+1)
         begin
-            if (DUT.reg_file.mem[i] !== sig_reg[i])
+            if (DUT.REG_FILE.mem[i] !== sig_reg[i])
                 begin
                 reg_fail[i] = 1'b1;
                 $error("fail on reg %0d",i);

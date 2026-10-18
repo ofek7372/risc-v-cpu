@@ -1,37 +1,32 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
-// Create Date: 29.06.2026 15:13:51
-// Design Name: 
 // Module Name: SC_instruction_mem
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
+// Synchronous-read instruction ROM (Xilinx ROM inference template).
+// 1-cycle read latency: address presented at cycle N, inst valid at cycle N+1.
+// Pair with a PC delay register at the top level so (PC, inst) stay aligned.
 //////////////////////////////////////////////////////////////////////////////////
-
-
 module SC_instruction_mem
-#(parameter  ADDR_WIDTH=7 ,parameter INST_WIDTH=32, parameter HEX_FILE="C:/Users/ec24673/project_2/mem/imem.hex")
+#(parameter  ADDR_WIDTH=10 ,parameter INST_WIDTH=32, parameter HEX_FILE="C:/Users/ec24673/project_2/tests_mem/branch_test_inst.hex")
 (
-    input [ADDR_WIDTH-1:0]Addr, 
-    output[INST_WIDTH-1:0]inst
+    input FLUSH,
+    input clk,
+    input EN,
+    input [ADDR_WIDTH-1:0] Addr,
+    output reg [INST_WIDTH-1:0] inst
     );
-    
-  reg [7:0] mem [2**(ADDR_WIDTH)-1:0];
-  initial begin 
-  //$readmemh(HEX_FILE, mem);
-  end
-  
-  assign inst={mem[Addr+3],mem[Addr+2],mem[Addr+1],mem[Addr]};
-    
+
+    (* rom_style = "block" *)
+    reg [INST_WIDTH-1:0] mem [(2**ADDR_WIDTH)-1:0];
+
+    initial
+        $readmemh(HEX_FILE, mem, 0, (2**ADDR_WIDTH)-1);
+
+    always @(posedge clk)
+        if (FLUSH) inst <= {INST_WIDTH{1'b0}};
+        else if (EN)
+            inst <= mem[Addr];
+
 endmodule
+
+
+							
