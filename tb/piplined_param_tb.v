@@ -21,25 +21,11 @@
 
 
 module piplined_param_tb
-#(parameter  TEST=1);
-  
-  localparam HEX_FILE=
-    (TEST==0)? "C:/Users/ec24673/project_2/tests_mem/testprog3_inst.hex":
-    (TEST==1)? "C:/Users/ec24673/project_2/tests_mem/branch_test_inst.hex":
-    (TEST==2)? "C:/Users/ec24673/project_2/tests_mem/load_use_mc_inst.hex":
-    (TEST==3)?"C:/Users/ec24673/project_2/tests_mem/testbranch2_inst.hex":"" ;
-     
-  localparam SIG_REG_FILE= 
-   (TEST==0) ? "C:/Users/ec24673/project_2/signiture/testprog3_reg.sig":
-   (TEST==1)? "C:/Users/ec24673/project_2/signiture/branch_test_reg.sig":
-   (TEST==2)?"C:/Users/ec24673/project_2/signiture/load_use_mc_reg.sig":
-   (TEST==3)?"C:/Users/ec24673/project_2/signiture/testbranch2_reg.sig":"";
-   
-  localparam SIG_MEM_FILE= 
-  (TEST==0)? "C:/Users/ec24673/project_2/signiture/testprog3_mem.sig":
-  (TEST==1)? "C:/Users/ec24673/project_2/signiture/branch_test_mem.sig":
-  (TEST==2)? "C:/Users/ec24673/project_2/signiture/load_use_mc_mem.sig":
-  (TEST==3)?"C:/Users/ec24673/project_2/signiture/testbranch2_mem.sig":"";
+#(parameter NAME = "branch_test",  // any program in tests/asm: alu_fwd, branch_test, isa_cover, ...
+  parameter ROOT = "");            // repo root with trailing '/'. Empty when run from the repo root;
+                                   // set to an absolute path for Vivado (it runs from project_2.sim/...)
+
+  reg [8*256-1:0] HEX_FILE, SIG_REG_FILE, SIG_MEM_FILE;
   
   localparam RUN_CYCLES = 100;
   
@@ -72,6 +58,10 @@ integer fail;
 //file load
  initial
  begin
+ $sformat(HEX_FILE,     "%0stests/hex/%0s_inst.hex", ROOT, NAME);
+ $sformat(SIG_REG_FILE, "%0stests/sig/%0s_reg.sig",  ROOT, NAME);
+ $sformat(SIG_MEM_FILE, "%0stests/sig/%0s_mem.sig",  ROOT, NAME);
+ #1; // after SC_instruction_mem's own time-0 $readmemh, so this load always wins
  $readmemh(HEX_FILE, DUT.RV32I_INST_MEM.mem);
  $readmemh(SIG_REG_FILE, sig_reg);
  $readmemh(SIG_MEM_FILE, sig_mem);

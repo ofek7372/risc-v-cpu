@@ -132,14 +132,15 @@ docs/           Design diagrams
 
 ```bash
 # Generate a test (needs riscv32-unknown-elf toolchain + Spike)
-cd tests && ./build.sh asm/<program>.s
+cd tests && ./build.sh asm/<program>.s   # steps 7-9 copy into my local Vivado folders; edit or delete them
 
-# Simulate (Icarus example)
-iverilog -g2012 -s piplined_param_tb -o sim.out tb/piplined_param_tb.v rtl/*.v
+# Simulate one program (Icarus example), from the repo root
+iverilog -g2012 -s piplined_param_tb -P 'piplined_param_tb.NAME="isa_cover"' \
+         -o sim.out tb/piplined_param_tb.v rtl/*.v
 vvp sim.out          # prints "passed" or "<n> fails"
 ```
 
-<!-- TODO: piplined_param_tb.v still has absolute C:/Users/... paths; switch to tests/hex and tests/sig. -->
+`NAME` is any program in `tests/asm/`. In Vivado, set the testbench generic `ROOT` to the absolute repo path with a trailing `/` (XSim runs from inside `project_2.sim/`).
 
 ## Next steps
 
