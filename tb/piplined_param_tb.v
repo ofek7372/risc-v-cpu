@@ -72,7 +72,7 @@ integer fail;
 //file load
  initial
  begin
- //$readmemh(HEX_FILE, DUT.RV32I_INST_MEM.mem);
+ $readmemh(HEX_FILE, DUT.RV32I_INST_MEM.mem);
  $readmemh(SIG_REG_FILE, sig_reg);
  $readmemh(SIG_MEM_FILE, sig_mem);
  cycle=0;
