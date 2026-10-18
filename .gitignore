@@ -6,3 +6,14 @@ tests_mem/
 docs/~$*
 docs/*.docx
 rtl/synth_1/
+project_2.cache/
+project_2.gen/
+project_2.hw/
+project_2.ip_user_files/
+project_2.runs/
+project_2.sim/
+project_2.srcs/
+project_2.xpr
+vivado.jou
+vivado.log
+docs/datapath_test_program_piplined_design.txt
