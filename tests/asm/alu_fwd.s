@@ -1,30 +1,38 @@
 .section .text
 .global _start
 _start:
-addi x10,x0,3
-slli x10,x10,12
-
-addi x11,x0,17
-addi x12,x0,34
-addi x13,x0,51
-sw x11,0(x10)
-sw x12,4(x10)
-sw x13,8(x10)
-
-lw x1,0(x10)
-add x2,x1,x1
-
-lw x3,4(x10)
-sub x4,x3,x11
-lw x5,8(x10)
-add x6,x5,x4
-
-lw x7,0(x10)
-add x8,x7,x12
-add x9,x8,x7
-
-lw x14,4(x10)
-and x15,x14,x13
-
-sw x8,0(x10)
+    addi x5,x0,10
+    xori x6,x5,2047
+    ori  x7,x0,2047
+    ori  x8,x0,1
+    add  x9,x5,x8
+    xor  x0,x5,x6
+    and  x10,x0,x5
+    sub  x0,x7,x8
+    and  x11,x7,x0
+    addi x1,x0,-1
+    addi x3,x5,-6
+    add  x2,x1,x0
+    sll  x12,x8,x3
+    addi x0,x0,20
+    addi x20,x0,30
+    sub  x21,x20,x0
+    ori  x0,x5,1
+    and  x5,x5,x5
+    add  x22,x0,x6
+    addi x30,x0,30
+    addi x30,x0,31
+    addi x31,x30,5
+    add  x20,x5,x5
+    sub  x20,x5,x8
+    and  x25,x5,x20
+    addi x20,x20,1
+    sub  x6,x6,x5
+    add  x0,x0,x0
+    add  x13,x20,x0
+    add  x15,x0,x6
+    addi x4,x0,3
+    sll  x4,x4,12
+    sw   x8,0(x4)
 halt: j halt
+
