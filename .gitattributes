@@ -4,3 +4,5 @@
 *.s text eol=lf
 *.hex text eol=lf
 *.sig text eol=lf
+tests/sig/*.sig linguist-generated=true
+tests/hex/*.hex linguist-generated=true
